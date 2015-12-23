@@ -6,11 +6,17 @@ import org.gradle.api.tasks.TaskAction
 
 class CheckCommitTask extends DefaultTask {
     public static String NAME = 'checkCommit'
+    CommitCheckerExtension extension
+
+    CheckCommitTask() {
+        project.afterEvaluate {
+            extension = project.extensions."${CommitCheckerExtension.NAME}"
+        }
+    }
 
     @TaskAction
     void exec() {
-        // TODO main branch to compare should be configurable by extension
-        def mainBranch = 'master'
+        def mainBranch = extension.mainBranch
         def currentBranch = "git status -b --porcelain"
             .execute()
             .text
@@ -30,13 +36,11 @@ class CheckCommitTask extends DefaultTask {
             added += columns[0].toInteger()
             deleted += columns[1].toInteger()
         }
-        // TODO threshold should be configurable by extension
-        def threshold = 10
+
         def changes = added + deleted
-        boolean failOnChangesExceedsThreshold = true
-        if (threshold <= changes) {
-            def message = "Your branch includes too much changes. Please check if those changes are not mistake but intentional. If your branch includes multiple features, consider separate them into multiple branch / pull requests."
-            if (failOnChangesExceedsThreshold) {
+        if (extension.changedLinesThreshold <= changes) {
+            def message = extension.messageForLargeChanges
+            if (extension.failOnChangesExceedsThreshold) {
                 throw new GradleException(message)
             } else {
                 println message
