@@ -2,6 +2,24 @@
 
 Gradle plugin to check commits in a branch to avoid large diff in a pull requests.
 
+```
+$ ./gradlew checkCommit
+:checkCommit FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':plugin:checkCommit'.
+> Your branch includes too much changes. Please check if those changes are not mistake but intentional. If your branch includes multiple features, consider separate them into multiple branches / pull requests.
+
+* Try:
+Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output.
+
+BUILD FAILED
+
+Total time: 11.791 secs
+```
+
 ## Usage
 
 Apply plugin:
@@ -18,7 +36,7 @@ Execute check:
 ./gradlew checkCommit
 ```
 
-Note that this plugin uses git command.  
+> Note that this plugin uses git command.  
 Please install git wherever you execute this task.
 
 If you want to run it on each 'check's, set it to dependent task:
