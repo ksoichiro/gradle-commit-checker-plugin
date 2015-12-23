@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/ksoichiro/git-commit-checker-plugin.svg?branch=master)](https://travis-ci.org/ksoichiro/git-commit-checker-plugin)
 [![Build status](https://ci.appveyor.com/api/projects/status/rom2rsf2j56f01bs?svg=true)](https://ci.appveyor.com/project/ksoichiro/git-commit-checker-plugin)
+[![Coverage Status](https://coveralls.io/repos/ksoichiro/git-commit-checker-plugin/badge.svg?branch=master&service=github)](https://coveralls.io/github/ksoichiro/git-commit-checker-plugin?branch=master)
 
 Gradle plugin to check commits in a branch to avoid large diff in a pull requests.
 
