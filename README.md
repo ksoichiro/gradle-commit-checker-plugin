@@ -67,6 +67,10 @@ commitChecker {
 
     // Change this property to whatever you want to show if there are any violations.
     messageForLargeChanges "Too large changes!"
+
+    // Change this property if you want to change
+    // the working directory for executing git commands.
+	workDir = project.file("foo/bar")
 }
 ```
 
