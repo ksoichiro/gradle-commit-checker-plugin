@@ -28,21 +28,21 @@ class PluginTest {
             rootDir.mkdir()
         }
 
-        execute "git init ."
+        println "init: " + execute("git init .").text
         new File(rootDir, "a.txt").text = """\
             |1
             |2
             |3""".stripMargin().stripIndent()
-        execute "git add ."
-        execute "git commit -m 'test'"
-        execute "git checkout -b branch1"
+        println "add: " + execute("git add .").text
+        println "commit: " + execute("git commit -m 'test'").text
+        println "checkout: " + execute("git checkout -b branch1").text
 
         new File(rootDir, "b.txt").text = """\
             |1
             |2
             |3""".stripMargin().stripIndent()
-        execute "git add ."
-        execute "git commit -m 'test'"
+        println "add: " + execute("git add .").text
+        println "commit: " + execute("git commit -m 'test'").text
     }
 
     @Test
@@ -77,7 +77,7 @@ class PluginTest {
             changedLinesThreshold = 1
         }
         project.afterEvaluate {
-            execute "git checkout master"
+            println "checkout : "+ execute("git checkout master").text
             assertEquals("master", project.tasks."${CheckCommitTask.NAME}".getCurrentBranch())
             project.tasks."${CheckCommitTask.NAME}".execute()
         }
