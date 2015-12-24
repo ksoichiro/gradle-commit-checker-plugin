@@ -60,8 +60,10 @@ class PluginTest {
             workDir = rootDir
             changedLinesThreshold = 1
         }
+        project.afterEvaluate {
+            project.tasks."${CheckCommitTask.NAME}".execute()
+        }
         project.evaluate()
-        project.tasks."${CheckCommitTask.NAME}".execute()
     }
 
     @Test
@@ -72,9 +74,11 @@ class PluginTest {
             workDir = rootDir
             changedLinesThreshold = 1
         }
+        project.afterEvaluate {
+            execute "git checkout master"
+            project.tasks."${CheckCommitTask.NAME}".execute()
+        }
         project.evaluate()
-        execute "git checkout master"
-        project.tasks."${CheckCommitTask.NAME}".execute()
     }
 
     // Disable this test since it's unstable.
@@ -88,11 +92,15 @@ class PluginTest {
             changedLinesThreshold = 1
             failOnChangesExceedsThreshold = true
         }
+        project.afterEvaluate {
+            project.tasks."${CheckCommitTask.NAME}".execute()
+        }
         project.evaluate()
-        project.tasks."${CheckCommitTask.NAME}".execute()
     }
 
     def execute(String command) {
-        command.execute(null as List, rootDir)
+        Process proc = command.execute(null as List, rootDir)
+        proc.waitFor()
+        proc
     }
 }
