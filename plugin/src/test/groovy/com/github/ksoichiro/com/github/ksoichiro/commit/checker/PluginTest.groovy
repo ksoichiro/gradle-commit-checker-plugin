@@ -34,7 +34,7 @@ class PluginTest {
             |2
             |3""".stripMargin().stripIndent()
         execute "git add ."
-        execute "git commit -m ''"
+        execute "git commit -m 'test'"
         execute "git checkout -b branch1"
 
         new File(rootDir, "b.txt").text = """\
@@ -42,7 +42,7 @@ class PluginTest {
             |2
             |3""".stripMargin().stripIndent()
         execute "git add ."
-        execute "git commit -m ''"
+        execute "git commit -m 'test'"
     }
 
     @Test
