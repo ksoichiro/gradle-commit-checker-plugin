@@ -17,8 +17,7 @@ class CheckCommitTask extends DefaultTask {
     @TaskAction
     void exec() {
         def mainBranch = extension.mainBranch
-        def currentBranch = "git status -b --porcelain"
-            .execute(null as List, extension.workDir)
+        def currentBranch = executeCommand("git status -b --porcelain")
             .text
             .readLines()
             .find { it.startsWith('##') }
@@ -31,7 +30,7 @@ class CheckCommitTask extends DefaultTask {
         }
         int added = 0
         int deleted = 0
-        "git diff ${mainBranch} ${currentBranch} --numstat".execute(null as List, extension.workDir).text.eachLine { line ->
+        executeCommand("git diff ${mainBranch} ${currentBranch} --numstat").text.eachLine { line ->
             def columns = line.split("\\t")
             added += columns[0].toInteger()
             deleted += columns[1].toInteger()
@@ -46,5 +45,11 @@ class CheckCommitTask extends DefaultTask {
                 println message
             }
         }
+    }
+
+    Process executeCommand(String command) {
+        Process process = command.execute(null as List, extension.workDir)
+        process.waitFor()
+        process
     }
 }
