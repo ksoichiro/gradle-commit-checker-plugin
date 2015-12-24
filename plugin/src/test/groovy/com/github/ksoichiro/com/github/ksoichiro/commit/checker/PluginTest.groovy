@@ -11,6 +11,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 
+import static junit.framework.Assert.assertEquals
 import static org.junit.Assert.assertTrue
 
 class PluginTest {
@@ -61,6 +62,7 @@ class PluginTest {
             changedLinesThreshold = 1
         }
         project.afterEvaluate {
+            assertEquals("branch1", project.tasks."${CheckCommitTask.NAME}".getCurrentBranch())
             project.tasks."${CheckCommitTask.NAME}".execute()
         }
         project.evaluate()
@@ -76,6 +78,7 @@ class PluginTest {
         }
         project.afterEvaluate {
             execute "git checkout master"
+            assertEquals("master", project.tasks."${CheckCommitTask.NAME}".getCurrentBranch())
             project.tasks."${CheckCommitTask.NAME}".execute()
         }
         project.evaluate()
@@ -93,6 +96,7 @@ class PluginTest {
             failOnChangesExceedsThreshold = true
         }
         project.afterEvaluate {
+            assertEquals("branch1", project.tasks."${CheckCommitTask.NAME}".getCurrentBranch())
             project.tasks."${CheckCommitTask.NAME}".execute()
         }
         project.evaluate()
