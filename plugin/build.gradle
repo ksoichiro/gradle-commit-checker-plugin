@@ -44,6 +44,12 @@ dependencies {
     testCompile gradleTestKit()
 }
 
+test {
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
+}
+
 cobertura {
     coverageFormats = ['html', 'xml']
 }

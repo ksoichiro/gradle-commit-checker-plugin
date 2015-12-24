@@ -48,12 +48,14 @@ class CheckCommitTask extends DefaultTask {
     }
 
     String getCurrentBranch() {
-        executeCommand("git status -b --porcelain")
+        def branch = executeCommand("git status -b --porcelain")
             .text
             .readLines()
             .find { it.startsWith('##') }
             .trim()
             .substring(3)
             .split('\\.\\.\\.')[0]
+        println branch
+        branch
     }
 }
