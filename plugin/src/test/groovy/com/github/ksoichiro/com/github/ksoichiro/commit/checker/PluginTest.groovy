@@ -6,6 +6,7 @@ import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
@@ -76,7 +77,9 @@ class PluginTest {
         project.tasks."${CheckCommitTask.NAME}".execute()
     }
 
+    // Disable this test since it's unstable.
     @Test(expected = GradleException)
+    @Ignore
     void checkCommitTreatAsBuildError() {
         Project project = ProjectBuilder.builder().withProjectDir(rootDir).build()
         project.apply plugin: PLUGIN_ID
