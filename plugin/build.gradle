@@ -136,7 +136,7 @@ afterEvaluate { project ->
             // for development
             repositories {
                 mavenDeployer {
-                    repository(url: uri('.repo'))
+                    repository(url: uri('../.repo'))
                 }
             }
         }
