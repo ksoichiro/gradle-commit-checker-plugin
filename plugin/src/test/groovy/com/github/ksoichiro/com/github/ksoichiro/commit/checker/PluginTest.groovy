@@ -80,6 +80,7 @@ class PluginTest {
             changedLinesThreshold = 1
         }
         project.afterEvaluate {
+            execute("git checkout master")
             assertEquals("master", project.tasks."${CheckCommitTask.NAME}".getCurrentBranch())
             project.tasks."${CheckCommitTask.NAME}".execute()
         }
