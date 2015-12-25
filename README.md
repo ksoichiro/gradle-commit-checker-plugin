@@ -30,7 +30,7 @@ Apply plugin:
 
 ```gradle
 plugins {
-    id 'com.github.ksoichiro.commit.checker' version '0.1.0'
+    id 'com.github.ksoichiro.commit.checker' version '0.1.1'
 }
 ```
 
