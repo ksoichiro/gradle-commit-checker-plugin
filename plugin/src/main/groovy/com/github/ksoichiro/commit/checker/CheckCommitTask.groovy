@@ -17,13 +17,7 @@ class CheckCommitTask extends DefaultTask {
     @TaskAction
     void exec() {
         def mainBranch = extension.mainBranch
-        def currentBranch = executeCommand("git status -b --porcelain")
-            .text
-            .readLines()
-            .find { it.startsWith('##') }
-            .trim()
-            .substring(3)
-            .split('\\.\\.\\.')[0]
+        def currentBranch = getCurrentBranch()
         if (currentBranch == mainBranch) {
             // Already in the main branch, nothing to do with it.
             return
@@ -51,5 +45,15 @@ class CheckCommitTask extends DefaultTask {
         Process process = command.execute(null as List, extension.workDir)
         process.waitFor()
         process
+    }
+
+    String getCurrentBranch() {
+        executeCommand("git status -b --porcelain")
+            .text
+            .readLines()
+            .find { it.startsWith('##') }
+            .trim()
+            .substring(3)
+            .split('\\.\\.\\.')[0]
     }
 }

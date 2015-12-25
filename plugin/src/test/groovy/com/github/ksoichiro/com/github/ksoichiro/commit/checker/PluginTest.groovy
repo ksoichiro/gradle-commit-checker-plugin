@@ -2,6 +2,7 @@ package com.github.ksoichiro.com.github.ksoichiro.commit.checker
 
 import com.github.ksoichiro.commit.checker.CheckCommitTask
 import com.github.ksoichiro.commit.checker.CommitCheckerExtension
+import org.ajoberstar.grgit.Grgit
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
@@ -11,6 +12,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 
+import static junit.framework.Assert.assertEquals
 import static org.junit.Assert.assertTrue
 
 class PluginTest {
@@ -27,21 +29,23 @@ class PluginTest {
             rootDir.mkdir()
         }
 
-        execute "git init ."
+        execute("git init .")
         new File(rootDir, "a.txt").text = """\
             |1
             |2
             |3""".stripMargin().stripIndent()
-        execute "git add ."
-        execute "git commit -m ''"
-        execute "git checkout -b branch1"
+        def grgit = Grgit.init(dir: rootDir.path)
+        grgit.add(patterns: ['a.txt'])
+        grgit.commit(message: 'Initial commit.')
+
+        execute("git checkout -b branch1")
 
         new File(rootDir, "b.txt").text = """\
             |1
             |2
             |3""".stripMargin().stripIndent()
-        execute "git add ."
-        execute "git commit -m ''"
+        grgit.add(patterns: ['b.txt'])
+        grgit.commit(message: 'Second commit.')
     }
 
     @Test
@@ -61,6 +65,7 @@ class PluginTest {
             changedLinesThreshold = 1
         }
         project.afterEvaluate {
+            assertEquals("branch1", project.tasks."${CheckCommitTask.NAME}".getCurrentBranch())
             project.tasks."${CheckCommitTask.NAME}".execute()
         }
         project.evaluate()
@@ -75,15 +80,13 @@ class PluginTest {
             changedLinesThreshold = 1
         }
         project.afterEvaluate {
-            execute "git checkout master"
+            assertEquals("master", project.tasks."${CheckCommitTask.NAME}".getCurrentBranch())
             project.tasks."${CheckCommitTask.NAME}".execute()
         }
         project.evaluate()
     }
 
-    // Disable this test since it's unstable.
     @Test(expected = GradleException)
-    @Ignore
     void checkCommitTreatAsBuildError() {
         Project project = ProjectBuilder.builder().withProjectDir(rootDir).build()
         project.apply plugin: PLUGIN_ID
@@ -93,6 +96,7 @@ class PluginTest {
             failOnChangesExceedsThreshold = true
         }
         project.afterEvaluate {
+            assertEquals("branch1", project.tasks."${CheckCommitTask.NAME}".getCurrentBranch())
             project.tasks."${CheckCommitTask.NAME}".execute()
         }
         project.evaluate()

@@ -41,7 +41,14 @@ dependencies {
     compile gradleApi()
     compile localGroovy()
     testRuntime files(createClasspathManifest)
+    testCompile 'org.ajoberstar:grgit:1.4.1'
     testCompile gradleTestKit()
+}
+
+test {
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
 }
 
 cobertura {
