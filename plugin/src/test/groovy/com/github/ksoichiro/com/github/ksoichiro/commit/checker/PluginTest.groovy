@@ -2,6 +2,7 @@ package com.github.ksoichiro.com.github.ksoichiro.commit.checker
 
 import com.github.ksoichiro.commit.checker.CheckCommitTask
 import com.github.ksoichiro.commit.checker.CommitCheckerExtension
+import org.ajoberstar.grgit.Grgit
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
@@ -33,16 +34,18 @@ class PluginTest {
             |1
             |2
             |3""".stripMargin().stripIndent()
-        println "add: " + execute("git add a.txt").text
-        println "commit: " + execute("git commit -m First").text
+        def grgit = Grgit.init(dir: rootDir.path)
+        grgit.add(patterns: ['a.txt'])
+        grgit.commit(message: 'Initial commit.')
+
         println "checkout: " + execute("git checkout -b branch1").text
 
         new File(rootDir, "b.txt").text = """\
             |1
             |2
             |3""".stripMargin().stripIndent()
-        println "add: " + execute("git add b.txt").text
-        println "commit: " + execute("git commit -m Second").text
+        grgit.add(patterns: ['b.txt'])
+        grgit.commit(message: 'Second commit.')
     }
 
     @Test
