@@ -33,7 +33,7 @@ class PluginTest {
             |1
             |2
             |3""".stripMargin().stripIndent()
-        println "add: " + execute("git add .").text
+        println "add: " + execute("git add a.txt").text
         println "commit: " + execute("git commit -m 'test'").text
         println "checkout: " + execute("git checkout -b branch1").text
 
@@ -41,7 +41,7 @@ class PluginTest {
             |1
             |2
             |3""".stripMargin().stripIndent()
-        println "add: " + execute("git add .").text
+        println "add: " + execute("git add b.txt").text
         println "commit: " + execute("git commit -m 'test'").text
     }
 
