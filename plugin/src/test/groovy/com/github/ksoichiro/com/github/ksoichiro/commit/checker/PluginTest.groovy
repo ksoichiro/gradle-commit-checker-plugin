@@ -87,9 +87,7 @@ class PluginTest {
         project.evaluate()
     }
 
-    // Disable this test since it's unstable.
     @Test(expected = GradleException)
-    @Ignore
     void checkCommitTreatAsBuildError() {
         Project project = ProjectBuilder.builder().withProjectDir(rootDir).build()
         project.apply plugin: PLUGIN_ID
