@@ -70,7 +70,7 @@ commitChecker {
 
     // Change this property if you want to change
     // the working directory for executing git commands.
-	workDir = project.file("foo/bar")
+    workDir = project.file("foo/bar")
 }
 ```
 
