@@ -29,7 +29,7 @@ class PluginTest {
             rootDir.mkdir()
         }
 
-        println "init: " + execute("git init .").text
+        execute("git init .")
         new File(rootDir, "a.txt").text = """\
             |1
             |2
@@ -38,7 +38,7 @@ class PluginTest {
         grgit.add(patterns: ['a.txt'])
         grgit.commit(message: 'Initial commit.')
 
-        println "checkout: " + execute("git checkout -b branch1").text
+        execute("git checkout -b branch1")
 
         new File(rootDir, "b.txt").text = """\
             |1
@@ -80,7 +80,6 @@ class PluginTest {
             changedLinesThreshold = 1
         }
         project.afterEvaluate {
-            println "checkout : "+ execute("git checkout master").text
             assertEquals("master", project.tasks."${CheckCommitTask.NAME}".getCurrentBranch())
             project.tasks."${CheckCommitTask.NAME}".execute()
         }
