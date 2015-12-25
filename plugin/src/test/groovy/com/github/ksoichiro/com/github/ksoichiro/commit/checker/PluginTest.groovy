@@ -34,7 +34,7 @@ class PluginTest {
             |2
             |3""".stripMargin().stripIndent()
         println "add: " + execute("git add a.txt").text
-        println "commit: " + execute("git commit -m 'test'").text
+        println "commit: " + execute("git commit -m First").text
         println "checkout: " + execute("git checkout -b branch1").text
 
         new File(rootDir, "b.txt").text = """\
@@ -42,7 +42,7 @@ class PluginTest {
             |2
             |3""".stripMargin().stripIndent()
         println "add: " + execute("git add b.txt").text
-        println "commit: " + execute("git commit -m 'test'").text
+        println "commit: " + execute("git commit -m Second").text
     }
 
     @Test
