@@ -1,0 +1,32 @@
+ext {
+    meta = [
+        versionName: '0.1.1',
+        group: 'com.github.ksoichiro',
+        pomArtifactId: 'gradle-commit-checker-plugin',
+        javaCompatibility: 1.6,
+
+        pomName: 'gradle-commit-checker-plugin',
+        pomInceptionYear: '2015',
+        pomDescription: 'Gradle plugin to check commits in a branch to avoid large diff in a pull requests',
+        pomUrl: 'https://github.com/ksoichiro/gradle-commit-checker-plugin',
+        pomScmUrl: 'https://github.com/ksoichiro/gradle-commit-checker-plugin',
+        pomScmConnection: 'scm:git@github.com/ksoichiro/gradle-commit-checker-plugin.git',
+        pomScmDevConnection: 'scm:git@github.com:ksoichiro/gradle-commit-checker-plugin.git',
+        pomLicenseName: 'Apache Licence 2.0',
+        pomLicenseUrl: 'http://www.apache.org/licenses/LICENSE-2.0',
+        pomLicenseDist: 'repo',
+        pomDeveloperId: 'ksoichiro',
+        pomDeveloperName: 'Soichiro Kashima',
+        pomDeveloperUrl: 'http://ksoichiro.blogspot.jp/',
+        localRepositoryUrl: uri('.repo'),
+
+        bintrayIssueTrackerUrl: 'https://github.com/ksoichiro/gradle-commit-checker-plugin',
+        pluginVcsurl: 'https://github.com/ksoichiro/gradle-commit-checker-plugin.git',
+        pluginTags: ['git'],
+
+        gradlePluginId: 'com.github.ksoichiro.commit.checker',
+
+        propNameNexusUsername: 'nexusUsername',
+        propNameNexusPassword: 'nexusPassword',
+    ].asImmutable()
+}
