@@ -6,7 +6,7 @@
 
 Gradle plugin to check commits in a branch to avoid large diff in a pull requests.
 
-```
+```console
 $ ./gradlew checkCommit
 :checkCommit FAILED
 
